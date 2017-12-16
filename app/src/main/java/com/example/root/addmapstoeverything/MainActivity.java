@@ -149,6 +149,72 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
     }
+    public void onClick1(View v) {
+        Log.d("onClick", "Button is Clicked");
+        String Restaurant = "restaurant";
+        n_map.clear();
+        String url = getUrl(latitude, longitude, Restaurant);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = n_map;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(MainActivity.this,"Nearby Restaurants", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+
+
+    public void onClick2(View v) {
+        String Hospital = "hospital";
+        Log.d("onClick", "Button is Clicked");
+        n_map.clear();
+        String url = getUrl(latitude, longitude, Hospital);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = n_map;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(MainActivity.this,"Nearby Hospitals", Toast.LENGTH_SHORT).show();
+        //showdown();
+    }
+
+
+
+
+
+
+    public void onClick3(View v) {
+        Log.d("onClick", "Button is Clicked");
+        String School = "school";
+        n_map.clear();
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
+        String url = getUrl(latitude, longitude, School);
+        Object[] DataTransfer = new Object[2];
+        DataTransfer[0] = n_map;
+        DataTransfer[1] = url;
+        Log.d("onClick", url);
+        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+        getNearbyPlacesData.execute(DataTransfer);
+        Toast.makeText(MainActivity.this,"Nearby Schools", Toast.LENGTH_SHORT).show();
+    }
+
+    private String getUrl(double latitude, double longitude, String nearbyPlace) {
+
+        StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        googlePlacesUrl.append("latlng=" + latitude + "," + longitude);
+        googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+        googlePlacesUrl.append("&types=" + nearbyPlace);
+        googlePlacesUrl.append("&key=" + "AIzaSyA6QFfImhbxZJwI6OwJs4xWIKDD4f1oCSw");
+        Log.d("getUrl", googlePlacesUrl.toString());
+        return (googlePlacesUrl.toString());
+    }
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -280,4 +346,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         }
     }
+    GetNearbyPlacesData gt =new GetNearbyPlacesData();
+    //public void showdown() {
+     //   Toast.makeText(MainActivity.this, gt.func(),Toast.LENGTH_LONG).show();
+    //}
 }
